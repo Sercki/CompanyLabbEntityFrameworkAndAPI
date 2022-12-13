@@ -138,6 +138,24 @@ public class CompanyContext : DbContext
             }
         };
         builder.Entity<Position>().HasData(positions);
+
+        builder.Entity<Personnel>().HasMany(p => p.Positions)
+            .WithMany(p => p.Personnel)
+            .UsingEntity<Dictionary<string, object>>(
+            "PersonnelPosition",
+            r =>r.HasOne<Position>().WithMany().HasForeignKey("PositionsId"),
+            l => l.HasOne<Personnel>().WithMany().HasForeignKey("PersonnelId"),
+            je =>
+            {
+                je.HasKey("PersonnelId", "PositionsId");
+                je.HasData(
+                    new { PersonnelId = 1, PositionsId = 1 },
+                    new { PersonnelId = 2, PositionsId = 2 },
+                    new { PersonnelId = 3, PositionsId = 2 },
+                    new { PersonnelId = 4, PositionsId = 4 },
+                    new { PersonnelId = 5, PositionsId = 3 },
+                    new { PersonnelId = 6, PositionsId = 5 });
+            });     
     }
 }
 
