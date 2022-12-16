@@ -54,8 +54,8 @@ namespace Company.Data.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "PersonnelPosition",
-                columns: new[] { "PersonnelId", "PositionsId" },
+                table: "PersonnelPositions",
+                columns: new[] { "PersonnelId", "PositionId" },
                 values: new object[,]
                 {
                     { 1, 1 },
@@ -70,33 +70,33 @@ namespace Company.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DeleteData(
-                table: "PersonnelPosition",
-                keyColumns: new[] { "PersonnelId", "PositionsId" },
+                table: "PersonnelPositions",
+                keyColumns: new[] { "PersonnelId", "PositionId" },
                 keyValues: new object[] { 1, 1 });
 
             migrationBuilder.DeleteData(
-                table: "PersonnelPosition",
-                keyColumns: new[] { "PersonnelId", "PositionsId" },
+                table: "PersonnelPositions",
+                keyColumns: new[] { "PersonnelId", "PositionId" },
                 keyValues: new object[] { 2, 2 });
 
             migrationBuilder.DeleteData(
-                table: "PersonnelPosition",
-                keyColumns: new[] { "PersonnelId", "PositionsId" },
+                table: "PersonnelPositions",
+                keyColumns: new[] { "PersonnelId", "PositionId" },
                 keyValues: new object[] { 3, 2 });
 
             migrationBuilder.DeleteData(
-                table: "PersonnelPosition",
-                keyColumns: new[] { "PersonnelId", "PositionsId" },
+                table: "PersonnelPositions",
+                keyColumns: new[] { "PersonnelId", "PositionId" },
                 keyValues: new object[] { 4, 4 });
 
             migrationBuilder.DeleteData(
-                table: "PersonnelPosition",
-                keyColumns: new[] { "PersonnelId", "PositionsId" },
+                table: "PersonnelPositions",
+                keyColumns: new[] { "PersonnelId", "PositionId" },
                 keyValues: new object[] { 5, 3 });
 
             migrationBuilder.DeleteData(
-                table: "PersonnelPosition",
-                keyColumns: new[] { "PersonnelId", "PositionsId" },
+                table: "PersonnelPositions",
+                keyColumns: new[] { "PersonnelId", "PositionId" },
                 keyValues: new object[] { 6, 5 });
 
             migrationBuilder.DeleteData(

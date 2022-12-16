@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Company.Data.Migrations
 {
     [DbContext(typeof(CompanyContext))]
-    [Migration("20221213115918_CreateEntityTables")]
-    partial class CreateEntityTables
+    [Migration("20221216101730_SeedDataAdded")]
+    partial class SeedDataAdded
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -45,6 +45,14 @@ namespace Company.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Businesses");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CompanyName = "Min första Sverige AB",
+                            OrganisationsNumber = "1-234567890"
+                        });
                 });
 
             modelBuilder.Entity("Company.Data.Entities.Personnel", b =>
@@ -81,6 +89,109 @@ namespace Company.Data.Migrations
                     b.HasIndex("SectionId");
 
                     b.ToTable("Personnel");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Anders",
+                            Salary = 20000.0,
+                            SectionId = 1,
+                            Surname = "Svensson",
+                            UnionMember = true
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Anna",
+                            Salary = 25000.0,
+                            SectionId = 2,
+                            Surname = "Svensdotter",
+                            UnionMember = true
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Lars",
+                            Salary = 25000.0,
+                            SectionId = 2,
+                            Surname = "Lindkvist",
+                            UnionMember = false
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Erik",
+                            Salary = 23000.0,
+                            SectionId = 3,
+                            Surname = "Nilsson",
+                            UnionMember = false
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Karin",
+                            Salary = 25000.0,
+                            SectionId = 3,
+                            Surname = "Berglund",
+                            UnionMember = true
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Peter",
+                            Salary = 24000.0,
+                            SectionId = 3,
+                            Surname = "Jonsson",
+                            UnionMember = true
+                        });
+                });
+
+            modelBuilder.Entity("Company.Data.Entities.PersonnelPosition", b =>
+                {
+                    b.Property<int>("PersonnelId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PositionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PersonnelId", "PositionId");
+
+                    b.HasIndex("PositionId");
+
+                    b.ToTable("PersonnelPositions");
+
+                    b.HasData(
+                        new
+                        {
+                            PersonnelId = 1,
+                            PositionId = 1
+                        },
+                        new
+                        {
+                            PersonnelId = 2,
+                            PositionId = 2
+                        },
+                        new
+                        {
+                            PersonnelId = 3,
+                            PositionId = 2
+                        },
+                        new
+                        {
+                            PersonnelId = 4,
+                            PositionId = 4
+                        },
+                        new
+                        {
+                            PersonnelId = 5,
+                            PositionId = 3
+                        },
+                        new
+                        {
+                            PersonnelId = 6,
+                            PositionId = 5
+                        });
                 });
 
             modelBuilder.Entity("Company.Data.Entities.Position", b =>
@@ -99,6 +210,33 @@ namespace Company.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Positions");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            PositionName = "Manager"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            PositionName = "Junior Kvalitetsansvarig"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            PositionName = "Master Kock"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            PositionName = "Kock"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            PositionName = "Praktikant"
+                        });
                 });
 
             modelBuilder.Entity("Company.Data.Entities.Section", b =>
@@ -122,6 +260,26 @@ namespace Company.Data.Migrations
                     b.HasIndex("CompanyId");
 
                     b.ToTable("Sections");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CompanyId = 1,
+                            SectionName = "HR Sverige"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CompanyId = 1,
+                            SectionName = "Kvalitetskontroll Sverige"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CompanyId = 1,
+                            SectionName = "Kök Sverige"
+                        });
                 });
 
             modelBuilder.Entity("PersonnelPosition", b =>
@@ -148,6 +306,25 @@ namespace Company.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Section");
+                });
+
+            modelBuilder.Entity("Company.Data.Entities.PersonnelPosition", b =>
+                {
+                    b.HasOne("Company.Data.Entities.Personnel", "Personnel")
+                        .WithMany()
+                        .HasForeignKey("PersonnelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Company.Data.Entities.Position", "Position")
+                        .WithMany()
+                        .HasForeignKey("PositionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Personnel");
+
+                    b.Navigation("Position");
                 });
 
             modelBuilder.Entity("Company.Data.Entities.Section", b =>

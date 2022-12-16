@@ -145,6 +145,53 @@ namespace Company.Data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Company.Data.Entities.PersonnelPosition", b =>
+                {
+                    b.Property<int>("PersonnelId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PositionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PersonnelId", "PositionId");
+
+                    b.HasIndex("PositionId");
+
+                    b.ToTable("PersonnelPositions");
+
+                    b.HasData(
+                        new
+                        {
+                            PersonnelId = 1,
+                            PositionId = 1
+                        },
+                        new
+                        {
+                            PersonnelId = 2,
+                            PositionId = 2
+                        },
+                        new
+                        {
+                            PersonnelId = 3,
+                            PositionId = 2
+                        },
+                        new
+                        {
+                            PersonnelId = 4,
+                            PositionId = 4
+                        },
+                        new
+                        {
+                            PersonnelId = 5,
+                            PositionId = 3
+                        },
+                        new
+                        {
+                            PersonnelId = 6,
+                            PositionId = 5
+                        });
+                });
+
             modelBuilder.Entity("Company.Data.Entities.Position", b =>
                 {
                     b.Property<int>("Id")
@@ -246,38 +293,6 @@ namespace Company.Data.Migrations
                     b.HasIndex("PositionsId");
 
                     b.ToTable("PersonnelPosition");
-
-                    b.HasData(
-                        new
-                        {
-                            PersonnelId = 1,
-                            PositionsId = 1
-                        },
-                        new
-                        {
-                            PersonnelId = 2,
-                            PositionsId = 2
-                        },
-                        new
-                        {
-                            PersonnelId = 3,
-                            PositionsId = 2
-                        },
-                        new
-                        {
-                            PersonnelId = 4,
-                            PositionsId = 4
-                        },
-                        new
-                        {
-                            PersonnelId = 5,
-                            PositionsId = 3
-                        },
-                        new
-                        {
-                            PersonnelId = 6,
-                            PositionsId = 5
-                        });
                 });
 
             modelBuilder.Entity("Company.Data.Entities.Personnel", b =>
@@ -289,6 +304,25 @@ namespace Company.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Section");
+                });
+
+            modelBuilder.Entity("Company.Data.Entities.PersonnelPosition", b =>
+                {
+                    b.HasOne("Company.Data.Entities.Personnel", "Personnel")
+                        .WithMany()
+                        .HasForeignKey("PersonnelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Company.Data.Entities.Position", "Position")
+                        .WithMany()
+                        .HasForeignKey("PositionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Personnel");
+
+                    b.Navigation("Position");
                 });
 
             modelBuilder.Entity("Company.Data.Entities.Section", b =>

@@ -102,6 +102,30 @@ namespace Company.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "PersonnelPositions",
+                columns: table => new
+                {
+                    PersonnelId = table.Column<int>(type: "int", nullable: false),
+                    PositionId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PersonnelPositions", x => new { x.PersonnelId, x.PositionId });
+                    table.ForeignKey(
+                        name: "FK_PersonnelPositions_Personnel_PersonnelId",
+                        column: x => x.PersonnelId,
+                        principalTable: "Personnel",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PersonnelPositions_Positions_PositionId",
+                        column: x => x.PositionId,
+                        principalTable: "Positions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Personnel_SectionId",
                 table: "Personnel",
@@ -113,6 +137,11 @@ namespace Company.Data.Migrations
                 column: "PositionsId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PersonnelPositions_PositionId",
+                table: "PersonnelPositions",
+                column: "PositionId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Sections_CompanyId",
                 table: "Sections",
                 column: "CompanyId");
@@ -122,6 +151,9 @@ namespace Company.Data.Migrations
         {
             migrationBuilder.DropTable(
                 name: "PersonnelPosition");
+
+            migrationBuilder.DropTable(
+                name: "PersonnelPositions");
 
             migrationBuilder.DropTable(
                 name: "Personnel");
