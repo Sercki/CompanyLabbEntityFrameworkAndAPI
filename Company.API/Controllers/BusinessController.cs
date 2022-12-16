@@ -43,7 +43,7 @@ public class BusinessController : ControllerBase
 		{
 			return Results.BadRequest($"Couldn't add the {typeof(Business).Name} entity.\n{ex}.");
 		}
-		return Results.BadRequest();
+		return Results.BadRequest($"Couldn't add the {typeof(Business).Name} entity.");
 	}
 
 	// PUT api/<CoursesController>/5
@@ -62,7 +62,7 @@ public class BusinessController : ControllerBase
 		{
 			return Results.BadRequest($"Couldn't update the {typeof(Business).Name} entity.\n{ex}.");
 		}
-		return Results.BadRequest();
+		return Results.BadRequest($"Couldn't add the {typeof(Business).Name} entity.");
 	}
 
 	// DELETE api/<CoursesController>/5
@@ -78,7 +78,7 @@ public class BusinessController : ControllerBase
 		{
 			return Results.BadRequest($"Couldn't delete the {typeof(Business).Name} entity.\n{ex}.");
 		}
-		return Results.BadRequest();
+		return Results.BadRequest($"Couldn't add the {typeof(Business).Name} entity.");
 	}
 }
-}
+
