@@ -1,8 +1,4 @@
-﻿using Company.Common.DTOs;
-using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
+﻿// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 namespace Company.API.Controllers;
 
 [Route("api/[controller]")]
@@ -12,73 +8,30 @@ public class BusinessController : ControllerBase
 	private readonly IDbService _db;
 	public BusinessController(IDbService db) => _db = db;
 
-	// GET: api/<CoursesController>
+	// GET: api/<BusinessController>
 	[HttpGet]
 	public async Task<IResult> Get() =>
-	Results.Ok(await _db.GetAsync<Business, BusinessDTO>());
+	await _db.HttpGetAsync<Business, BusinessDTO>();
 
-	// GET api/<CoursesController>/5
+	// GET api/<BusinessController>/5
 	[HttpGet("{id}")]
-	public async Task<IResult> Get(int id)
-	{
-		var result = await _db.SingleAsync<Business, BusinessDTO>(e => e.Id.Equals(id));
-		if (result is null) return Results.NotFound();
-		return Results.Ok(result);
-	}
-	// POST api/<CoursesController>
+	public async Task<IResult> Get(int id) =>
+	await _db.HttpSingleAsync<Business, BusinessDTO>(id);
+
+	// POST api/<BusinessController>
 	[HttpPost]
-	public async Task<IResult> Post([FromBody] BusinessDTO dto)
-	{
-		try
-		{
-			var entity = await _db.AddAsync<Business, BusinessDTO>(dto);
-			if (await _db.SaveChangesAsync())
-			{
-				var node = typeof(Business).Name.ToLower();
-				return Results.Created($"/{node}s/{entity.Id}", entity);
-			}
+	public async Task<IResult> Post([FromBody] BusinessDTO business) =>
+		await _db.HttpPostAsync<Business, BusinessDTO>(business);
 
-		}
-		catch (Exception ex)
-		{
-			return Results.BadRequest($"Couldn't add the {typeof(Business).Name} entity.\n{ex}.");
-		}
-		return Results.BadRequest();
-	}
-
-	// PUT api/<CoursesController>/5
+	// PUT api/<BusinessController>/5
 	[HttpPut("{id}")]
-	public async Task<IResult> Put(int id, [FromBody] BusinessDTO dto)
-	{
-		try
-		{
-			if (!await _db.AnyAsync<Business>(e => e.Id.Equals(id))) return
-			Results.NotFound();
-			_db.Update<Business, BusinessDTO>(id, dto);
-			if (await _db.SaveChangesAsync()) return Results.NoContent();
+	public async Task<IResult> Put(int id, [FromBody] BusinessDTO business) =>
+		await _db.HttpPutAsync<Business, BusinessDTO>(id, business);
 
-		}
-		catch (Exception ex)
-		{
-			return Results.BadRequest($"Couldn't update the {typeof(Business).Name} entity.\n{ex}.");
-		}
-		return Results.BadRequest();
-	}
-
-	// DELETE api/<CoursesController>/5
+	// DELETE api/<BusinessController>/5
 	[HttpDelete("{id}")]
-	public async Task<IResult> Delete(int id)
-	{
-		try
-		{
-			if (!await _db.DeleteAsync<Business>(id)) return Results.NotFound();
-			if (await _db.SaveChangesAsync()) return Results.NoContent();
-		}
-		catch (Exception ex)
-		{
-			return Results.BadRequest($"Couldn't delete the {typeof(Business).Name} entity.\n{ex}.");
-		}
-		return Results.BadRequest();
-	}
+	public async Task<IResult> Delete(int id) =>
+		await _db.HttpDeleteAsync<Business>(id);
 }
-}
+
+
