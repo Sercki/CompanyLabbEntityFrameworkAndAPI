@@ -3,6 +3,6 @@
 public record PersonnelPositionDTO
 {
 	public int PersonnelId { get; set; } = default;
-	public int PositionsId { get; set; } = default;
-	public PersonnelPositionDTO(int personnelID, int positionsId ) => (PersonnelId, PositionsId) = (personnelID, positionsId);
+	public int PositionId { get; set; } = default;
+	public PersonnelPositionDTO(int personnelID, int positionId ) => (PersonnelId, PositionId) = (personnelID, positionId);
 }
